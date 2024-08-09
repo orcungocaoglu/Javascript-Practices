@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uygulamalar</title>
+</head>
+<body>
+
+<div>
+    <h1>1-JavaScript gizle göster</h1>
+</div>
+
+<div class="toggle-container">
+    <button onclick="gizleGoster('icerik')">Gizle/Göster</button>
+</div>
+
+<div id="icerik">
+    <p>Gizlenen/Gösterilen içerik</p>
+</div>
+
+<div>
+    <h1>2-JavaScript yönlendirme işlemi</h1>
+</div>
+
+<button onclick="yonlendirme()">Yönlendirme Başlat</button>
+
+<div id="sayac"></div>
+
+<div>
+    <h1>3-JavaScript rastgele tam sayı üretmek</h1>
+</div>
+<button onclick="rastgeleSayi()">Rastgele Tam Sayı Üret</button>
+
+<div>
+    <h1>4-JavaScript form doğrulama</h1>
+</div>
+
+<form id="kullaniciFormu" onsubmit="return dogrulaForm()">
+    <label for="kullaniciAdi">Kullanıcı Adı:</label>
+    <input type="text" id="kullaniciAdi" name="kullaniciAdi"><br><br>
+    <label for="sifre">Şifre:</label>
+    <input type="password" id="sifre" name="sifre"><br><br>
+    <button type="submit">Gönder</button>
+</form>
+
+<div>
+    <h1>5-JavaScript karakter sayısı bulma ve sınırlama</h1>
+</div>
+<textarea id="mesaj" cols="30" rows="10" maxlength="100"></textarea>
+<div>
+    <p id="karakterSayisi">Karakter Sayısı: 0 / 100</p>
+</div>
+
+
+<div>
+    <h1>6-Hesap Makinesi - BİTMEDİ</h1>
+</div>
+<div id="hesapMakinesi">
+    <div id="ekran">
+    <input type="text" id="sonuc">
+    </div>
+    <div id="sayilar">
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button>+</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>-</button>
+   <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>/</button>
+    <button>0</button>
+    <button>.</button>
+    <button>=</button>
+    <button>*</button>
+    </div>
+</div>
+
+<div>
+    <h1>7- Sayı tahmini oyunu</h1>
+</div>
+<p>1 ile 100 arasında bir sayı girin</p>
+<input type="text" id="tahmin" maxlength="3">
+<button onclick="tahminEt()">Tahmin Et</button>
+<p id="sonuc"></p>
+<script>
+    function gizleGoster(ID) {
+        var secilenID = document.getElementById(ID);
+        if (secilenID.style.display === "none") {
+            secilenID.style.display = "";
+        } else {
+            secilenID.style.display = "none";
+        }
+    }
+
+    function ysYonlendir(ID, adres, saniye) {
+        if (saniye == 0) {
+            window.location.href = adres;
+            return;
+        }
+        document.getElementById(ID).innerHTML = saniye + " saniye sonra Google'a yönlendiriliyorsunuz.";
+        saniye--;
+        setTimeout(function() {
+            ysYonlendir(ID, adres, saniye);
+        }, 1000);
+    }
+
+    function yonlendirme() {
+        ysYonlendir('sayac', 'https://www.google.com.tr/?hl=tr', 5);
+    }
+
+    function rastgeleSayi() {
+        alert(Math.floor(Math.random() * 10));
+    }
+
+    function dogrulaForm() {
+        var kullaniciAdi = document.getElementById("kullaniciAdi").value;
+        var sifre = document.getElementById("sifre").value;
+
+        if (kullaniciAdi === "" || sifre === "") {
+            alert("Lütfen tüm alanları doldurun.");
+            return false;
+        }
+
+        return true;
+    }
+
+    var mesajTextArea = document.getElementById("mesaj");
+    var karakterSayisiP = document.getElementById("karakterSayisi");
+
+    mesajTextArea.addEventListener("input", function() {
+        var karakterSayisi = mesajTextArea.value.length;
+        karakterSayisiP.textContent = "Karakter Sayısı: "+ karakterSayisi + " / 100";
+
+        if (karakterSayisi > 100) {
+            mesajTextArea.value = mesajTextArea.value.substring(0, 100);
+            karakterSayisiP.textContent = "Karakter Sayısı: 100 / 100 !!!!!!!!!";
+        }
+    });
+
+
+    "use strict";
+    var _sayilar = document.getElementsByTagName("button"),
+    _sayiUzunluk = _sayilar.length,
+    i = 0;
+    for (i = 0; i < _sayiUzunluk; i++) {
+    _sayilar[i].onclick = hesapla;
+    }
+
+
+
+    function tahminEt() {
+        var tahmin = parseInt(document.getElementById("tahmin").value);
+        var sonucP = document.getElementById("sonuc");
+
+        if (isNaN(tahmin)) {
+            sonucP.textContent = "Geçerli bir sayı giriniz.";
+            return;
+        }
+
+        tahminHakki--;
+
+        if (tahmin === gizliSayi) {
+            sonucP.textContent = "Tebrikler! Doğru tahmin ettiniz.";
+            tahminHakki = 0;
+        } else if (tahmin < gizliSayi) {
+            sonucP.textContent = "Daha yüksek bir sayı giriniz.";
+        } else {
+            sonucP.textContent = "Daha düşük bir sayı giriniz." + tahminHakki;
+        }
+    }
+
+</script>
+
+</body>
+</html>
+
+<style>
+    #hesapMakinesi {
+    margin: 0 auto;
+    width: 350px;
+    height: auto;
+    background-color: slategray;
+    border-radius: 5px;
+    padding: 10px;
+    }
+    #ekran {
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    }
+   #sonuc {
+    padding: 10px;
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    text-align: right;
+    font-size: 50px;
+    word-wrap: break-word;
+    }
+    #sayilar {
+    text-align: center;
+    }
+    button {
+    width: 70px;
+    height: 50px;
+    margin: 4px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+    }
+   </style>
